@@ -4,7 +4,6 @@
   "description": "What to see bot offer acces to MovieDB Api",
   "main": "bot.js",
   "dependencies": {
-    "axios": "^0.17.0",
     "mongodb": "^2.2.33",
     "moviedb": "^0.2.10",
     "node-telegram-bot-api": "^0.29.0"
