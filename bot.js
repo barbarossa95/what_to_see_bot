@@ -61,4 +61,18 @@ module.exports = (argument) => {
         //todo discover api command
     });
     */
+
+    bot.on('message', function onMessage(msg) {
+        Math.random
+        bot.sendMessage(msg.chat.id, getRandomAnswer());
+    });
+
+    function getRandomAnswer() {
+        min = Math.ceil(0);
+        max = Math.floor(2);
+        rand = Math.floor(Math.random() * (max - min)) + min;
+        if (rand === 1) return "так";
+        return "ишо?";
+    }
+
 }
