@@ -34,10 +34,10 @@ function Bot () {
     bot = new TelegramBotApi(telegramBotToken, options);
     moviedb = MovieDB(movieDbApiKeyV3);
 
-    bot.getUpdates()
-        .then((res) => {
-            bot.sendMessage(res[0].message.chat.id, getRandomAnswer());
-        }).catch((err) => console.log(err));
+    // bot.getUpdates()
+    //     .then((res) => {
+    //         bot.sendMessage(res[0].message.chat.id, getRandomAnswer());
+    //     }).catch((err) => console.log(err));
 
     bot.setWebHook(`${url}/bot${telegramBotToken}`);
 
