@@ -24,7 +24,7 @@ module.exports = (argument) => {
     const ITEMS_LIMIT = process.env.ITEMS_LIMIT
 
     // Bot Api options
-    const options {
+    const options = {
         webHook: {
             port: port
         }
