@@ -34,6 +34,16 @@ function Bot () {
     bot = new TelegramBotApi(telegramBotToken, options);
     moviedb = MovieDB(movieDbApiKeyV3);
 
+    moviedb.searchMovie({
+        query   : 'alien',
+        language: LANG}, (err, res) => {
+            if (err) return;
+            res.results.forEach((element) => {
+                console.log(element.title);
+            }, this);
+        });
+
+
     // bot.getUpdates()
     //     .then((res) => {
     //         bot.sendMessage(res[0].message.chat.id, getRandomAnswer());
@@ -49,17 +59,14 @@ function Bot () {
     bot.onText(/\/searchByName (.+)/, (msg, match) => {
         const query = match[1];
 
-        moviedb.search({
-            query   : query,
-            language: language}, (err, res) => {
+        moviedb.searchMovie({
+            query   : 'alien',
+            language: LANG}, (err, res) => {
                 if (err) return;
-                res.items.forEach((element) => {
-
+                res.results.forEach((element) => {
+                    console.log(element.title);
                 }, this);
-                bot.sendMessage(msg.chat.id, resp);
             });
-
-        bot.sendMessage(msg.chat.id, resp);
     });
 
     /*
