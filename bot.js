@@ -1,8 +1,10 @@
-// bot.js
-//
-// Created by Greshilov at 23.10.2017
-//
-// bot main file
+/**
+ * bot.js
+ * 
+ * Created by Greshilov at 23.10.2017
+ * 
+ * bot main file
+ */
 
 function Bot () {
 
