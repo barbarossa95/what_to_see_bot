@@ -9,7 +9,7 @@
 function Bot () {
 
     const movieDbApiKeyV3 = process.env.MOVIE_DB_API_KEY || 'bdd5822cfe3827daf35a3f4cac9f061c';
-    const telegramBotToken = process.env.TELEGRAM_BOT_API_KEY || '410067932:AAGw0knV8r4yNVZVLE93aSiX9Bg06EpCJ4U';
+    const telegramBotToken = process.env.TELEGRAM_BOT_API_TOKEN || '410067932:AAGw0knV8r4yNVZVLE93aSiX9Bg06EpCJ4U';
 
     const MovieDB = require('moviedb');
     const TelegramBotApi = require('node-telegram-bot-api');
@@ -38,20 +38,21 @@ function Bot () {
 
     moviedb.searchMovie({
         query   : 'alien',
-        language: LANG}, (err, res) => {
+        language: LANG }, (err, res) => {
             if (err) return;
             res.results.forEach((element) => {
                 console.log(element.title);
             }, this);
         });
 
-
+    bot.setWebHook(`${url}/bot${telegramBotToken}`);
+    
     // bot.getUpdates()
     //     .then((res) => {
     //         bot.sendMessage(res[0].message.chat.id, getRandomAnswer());
     //     }).catch((err) => console.log(err));
 
-    bot.setWebHook(`${url}/bot${telegramBotToken}`);
+    
 
     bot.onText(/\/echo (.+)/, (msg, match) => {
         const resp = match[1];
