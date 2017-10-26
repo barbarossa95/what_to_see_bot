@@ -66,7 +66,7 @@ function Bot () {
     function cmdEcho(msg, match) {
         const resp = match[1];
         bot.sendMessage(msg.chat.id, resp);
-    };
+    }
 
     function cmdSearchByName(msg, match) {
         const query = match[1];
@@ -75,11 +75,17 @@ function Bot () {
             query   : query,
             language: LANG}, (err, res) => {
                 if (err) return;
-                res.results.forEach((element) => {
-                    console.log(element.title);
-                }, this);
+                sendMovies(res.results, msg.chat.id);
             });
-    };
+    }
+
+    function sendMovies(movies, chatId) {
+        for (var movie of movies) {
+            message = `<b>${movie.title}</b>\n`;
+            message += movie.owerview;
+            bot.sendMessage(chatId, message);
+        }
+    }
 
     return this;
 }
