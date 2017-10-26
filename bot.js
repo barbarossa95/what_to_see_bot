@@ -8,6 +8,25 @@
 
 function Bot () {
 
+    this.getSoon = function(){
+        console.log('getSoon');
+    };
+    this.getGenres = function(){
+        console.log('getGenres');
+    };
+    this.getPopular = function(){
+        console.log('getPopular');
+    };
+
+    console.log(this);
+
+
+    if (typeof this['getSoon'] === 'function') {
+        this['getSoon'].call(this);
+    }
+    return;
+
+
     const movieDbApiKeyV3 = process.env.MOVIE_DB_API_KEY || 'bdd5822cfe3827daf35a3f4cac9f061c';
     const telegramBotToken = process.env.TELEGRAM_BOT_API_TOKEN || '410067932:AAGw0knV8r4yNVZVLE93aSiX9Bg06EpCJ4U';
 
@@ -53,7 +72,7 @@ function Bot () {
             message_id: msg.message_id,
         };
 
-        if (this[action] === undefined) return;
+        if (typeof [action] === undefined) return;
 
         this[action].call(this);
     }
@@ -86,15 +105,15 @@ function Bot () {
         bot.sendMessage(msg.chat.id, 'For searching movie use command: /search [film name]:', opts);
     }
 
-    function getSoon(){
+    this.getSoon = function(){
         console.log('getSoon');
-    }
-    function getGenres(){
+    };
+    this.getGenres = function(){
         console.log('getGenres');
-    }
-    function getPopular(){
+    };
+    this.getPopular = function(){
         console.log('getPopular');
-    }
+    };
 
     /**
      * Search films by name
