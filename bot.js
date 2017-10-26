@@ -37,9 +37,9 @@ function Bot () {
 
     bot.setWebHook(`${url}/bot${telegramBotToken}`);
 
-    bot.onText(/\/echo (.+)/, this.cmdEcho);
+    bot.onText(/\/echo (.+)/, cmdEcho);
 
-    bot.onText(/\/searchByName (.+)/, this.cmdSearchByName);
+    bot.onText(/\/searchByName (.+)/, cmdSearchByName);
 
     /**
      * Answer on all messages
@@ -63,12 +63,12 @@ function Bot () {
         return "ишо?";
     }
 
-    this.cmdEcho = (msg, match) => {
+    function cmdEcho(msg, match) {
         const resp = match[1];
         bot.sendMessage(msg.chat.id, resp);
     };
 
-    this.cmdSearchByName = (msg, match) => {
+    function cmdSearchByName(msg, match) {
         const query = match[1];
 
         moviedb.searchMovie({
