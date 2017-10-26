@@ -46,7 +46,7 @@ function Bot () {
     bot.on('callback_query', onCallbackQuery);
 
     function onCallbackQuery(callbackQuery) {
-        const action = callbackQuery.data.action;
+        const action = callbackQuery.data;
         const msg = callbackQuery.message;
         const opts = {
             chat_id: msg.chat.id,
@@ -65,25 +65,19 @@ function Bot () {
                 [
                   {
                     text: 'Soon in cinema',
-                    callback_data: {
-                        action: 'getSoon'
-                    }
+                    callback_data: 'getSoon'
                   }
                 ],
                 [
                   {
                     text: 'Films by genres',
-                    callback_data: {
-                        action: 'getGenres'
-                    }
+                    callback_data: 'getGenres'
                   }
                 ],
                 [
                   {
                     text: 'Popular films',
-                    callback_data: {
-                        action: 'getPopular'
-                    }
+                    callback_data: 'getPopular'
                   }
                 ]
               ]
