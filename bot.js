@@ -53,10 +53,9 @@ function Bot () {
             message_id: msg.message_id,
         };
 
-        switch (action) {
-            case 'getSoon': sendGenres() break;
-            case 'getGenres': sendGenres() break;
-        }
+        if (this[action] === undefined) return;
+
+        this[action].call(this);
     }
 
     function cmdMenu(msg, match) {
@@ -76,11 +75,28 @@ function Bot () {
                     callback_data: {
                         action: 'getGenres'
                   }
+                ],
+                [
+                  {
+                    text: 'Popular films',
+                    callback_data: {
+                        action: 'getPopular'
+                  }
                 ]
               ]
             }
         };
         bot.sendMessage(msg.chat.id, 'For searching movie use command: /search [film name]:', opts);
+    }
+
+    function getSoon(){
+        console.log('getSoon');
+    }
+    function getGenres(){
+        console.log('getGenres');
+    }
+    function getPopular(){
+        console.log('getPopular');
     }
 
     /**
