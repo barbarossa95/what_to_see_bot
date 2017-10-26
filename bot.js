@@ -1,9 +1,9 @@
 /**
  * bot.js
- * 
+ *
  * Created by Greshilov at 23.10.2017
- * 
- * bot main file
+ *
+ * Bot main file
  */
 
 function Bot () {
@@ -27,7 +27,6 @@ function Bot () {
 
     // Bot Api options
     const options = {
-        // pooling: true,
         webHook: {
             port: port
         }
@@ -36,69 +35,51 @@ function Bot () {
     bot = new TelegramBotApi(telegramBotToken, options);
     moviedb = MovieDB(movieDbApiKeyV3);
 
-    moviedb.searchMovie({
-        query   : 'alien',
-        language: LANG }, (err, res) => {
-            if (err) return;
-            res.results.forEach((element) => {
-                console.log(element.title);
-            }, this);
-        });
-
     bot.setWebHook(`${url}/bot${telegramBotToken}`);
-    
-    // bot.getUpdates()
-    //     .then((res) => {
-    //         bot.sendMessage(res[0].message.chat.id, getRandomAnswer());
-    //     }).catch((err) => console.log(err));
 
-    
+    bot.onText(/\/echo (.+)/, cmdEcho);
 
-    bot.onText(/\/echo (.+)/, (msg, match) => {
-        const resp = match[1];
-        bot.sendMessage(msg.chat.id, resp);
-    });
-
-    bot.onText(/\/searchByName (.+)/, (msg, match) => {
-        const query = match[1];
-
-        moviedb.searchMovie({
-            query   : 'alien',
-            language: LANG}, (err, res) => {
-                if (err) return;
-                res.results.forEach((element) => {
-                    console.log(element.title);
-                }, this);
-            });
-    });
-
-    /*
-    bot.onText(/\/searchByKeywords (.+)/, function onEchoText(msg, match) {
-        const query = match[1];
-        //todo discover api command
-    });
-    */
+    bot.onText(/\/searchByName (.+)/, cmdSearchByName);
 
     /**
-     * All answer on all other messages
-     */
+     * Answer on all messages
+
     bot.on('message', function onMessage(msg) {
         Math.random
         bot.sendMessage(msg.chat.id, getRandomAnswer());
     });
+     */
 
     /**
      * Get random message text
      *
      * @returns message
      */
-    function getRandomAnswer() {
+    this.getRandomAnswer = () => {
         min = Math.ceil(0);
         max = Math.floor(2);
         rand = Math.floor(Math.random() * (max - min)) + min;
         if (rand === 1) return "так";
         return "ишо?";
     }
+
+    this.cmdEcho = (msg, match) => {
+        const resp = match[1];
+        bot.sendMessage(msg.chat.id, resp);
+    };
+
+    this.cmdSearchByName = (msg, match) => {
+        const query = match[1];
+
+        moviedb.searchMovie({
+            query   : query,
+            language: LANG}, (err, res) => {
+                if (err) return;
+                res.results.forEach((element) => {
+                    console.log(element.title);
+                }, this);
+            });
+    };
 
     return this;
 }
