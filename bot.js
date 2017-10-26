@@ -37,9 +37,9 @@ function Bot () {
 
     bot.setWebHook(`${url}/bot${telegramBotToken}`);
 
-    bot.onText(/\/echo (.+)/, cmdEcho);
+    bot.onText(/\/echo (.+)/, this.cmdEcho);
 
-    bot.onText(/\/searchByName (.+)/, cmdSearchByName);
+    bot.onText(/\/searchByName (.+)/, this.cmdSearchByName);
 
     /**
      * Answer on all messages
@@ -55,7 +55,7 @@ function Bot () {
      *
      * @returns message
      */
-    this.getRandomAnswer = () => {
+    function getRandomAnswer() {
         min = Math.ceil(0);
         max = Math.floor(2);
         rand = Math.floor(Math.random() * (max - min)) + min;
