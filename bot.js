@@ -38,23 +38,7 @@ function Bot () {
     bot.setWebHook(`${url}/bot${telegramBotToken}`);
 
 
-
-        let opt = {
-            reply_markup: {
-                reply_keyboard_markup: {
-                    keyboard: [
-                        [ { text: 'Button 1 text' }, ],
-                        [ { text: 'Button 2 text' }, ],
-                        [ { text: 'Button 3 text' }, ],
-                        [ { text: 'Button 4 text' }, ]
-                    ],
-                }
-            }
-        };
-        bot.sendMessage(267461350, 'Bot Menu:', opt);
-
-
-
+    cmdMenu({ chat: { id: 267461350}});
 
     bot.onText(/\/start (.+)/, cmdMenu);
 
@@ -87,24 +71,26 @@ function Bot () {
     }
 
     function cmdMenu(msg, match) {
-        let options = {
+        const opts = {
             reply_markup: {
-                reply_keyboard_markup: {
-                    keyboard: [
-                        [ { text: 'Button 1 text' }, ],
-                        [ { text: 'Button 2 text' }, ],
-                        [ { text: 'Button 3 text' }, ],
-                        [ { text: 'Button 4 text' }, ]
-                    ],
-                }
+              inline_keyboard: [
+                [
+                  {
+                    text: 'Button1',
+                     // we shall check for this value when we listen
+                     // for "callback_query"
+                    callback_data: 'Button1'
+                  }
+                ]
+              ]
             }
         };
-        bot.sendMessage(msg.chat.id, 'Bot Menu:', options);
+        bot.sendMessage(msg.chat.id, 'Bot Menu:', opts);
     }
 
     /**
      * Echo command
-     * @param  {string} msg entire message
+     * @param  {object} msg entire message
      * @param  {array} match regexp array
      * @return {void}
      */
@@ -115,7 +101,7 @@ function Bot () {
 
     /**
      * Search films by name
-     * @param  {string} msg entire message
+     * @param  {object} msg entire message
      * @param  {array} match regexp array
      * @return {void}
      */
