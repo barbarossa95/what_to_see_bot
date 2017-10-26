@@ -37,37 +37,26 @@ function Bot () {
 
     bot.setWebHook(`${url}/bot${telegramBotToken}`);
 
-
-    cmdMenu({ chat: { id: 267461350}});
-
     bot.onText(/\/start/, cmdMenu);
 
     bot.onText(/\/menu/, cmdMenu);
 
-    bot.onText(/\/echo (.+)/, cmdEcho);
-
     bot.onText(/\/searchByName (.+)/, cmdSearchByName);
 
-    /**
-     * Answer on all messages
+    bot.on('callback_query', onCallbackQuery);
 
-    bot.on('message', function onMessage(msg) {
-        Math.random
-        bot.sendMessage(msg.chat.id, getRandomAnswer());
-    });
-     */
+    function onCallbackQuery(callbackQuery) {
+        const action = callbackQuery.data.action;
+        const msg = callbackQuery.message;
+        const opts = {
+            chat_id: msg.chat.id,
+            message_id: msg.message_id,
+        };
 
-    /**
-     * Get random message text
-     *
-     * @returns message
-     */
-    function getRandomAnswer() {
-        min = Math.ceil(0);
-        max = Math.floor(2);
-        rand = Math.floor(Math.random() * (max - min)) + min;
-        if (rand === 1) return "так";
-        return "ишо?";
+        switch (action) {
+            case 'getSoon': sendGenres() break;
+            case 'getGenres': sendGenres() break;
+        }
     }
 
     function cmdMenu(msg, match) {
@@ -76,27 +65,22 @@ function Bot () {
               inline_keyboard: [
                 [
                   {
-                    text: 'Button1',
-                     // we shall check for this value when we listen
-                     // for "callback_query"
-                    callback_data: 'Button1'
+                    text: 'Soon in cinema',
+                    callback_data: {
+                        action: 'getSoon'
+                  }
+                ],
+                [
+                  {
+                    text: 'Films by genres',
+                    callback_data: {
+                        action: 'getGenres'
                   }
                 ]
               ]
             }
         };
-        bot.sendMessage(msg.chat.id, 'Bot Menu:', opts);
-    }
-
-    /**
-     * Echo command
-     * @param  {object} msg entire message
-     * @param  {array} match regexp array
-     * @return {void}
-     */
-    function cmdEcho(msg, match) {
-        const resp = match[1];
-        bot.sendMessage(msg.chat.id, resp);
+        bot.sendMessage(msg.chat.id, 'For searching movie use command: /search [film name]:', opts);
     }
 
     /**
