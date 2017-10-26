@@ -37,6 +37,25 @@ function Bot () {
 
     bot.setWebHook(`${url}/bot${telegramBotToken}`);
 
+
+
+        let options = {
+            reply_markup: {
+                reply_keyboard_markup: {
+                    keyboard: [
+                        [ { text: 'Button 1 text' }, ],
+                        [ { text: 'Button 2 text' }, ],
+                        [ { text: 'Button 3 text' }, ],
+                        [ { text: 'Button 4 text' }, ]
+                    ],
+                }
+            }
+        };
+        bot.sendMessage(267461350, 'Bot Menu:', options);
+
+
+
+
     bot.onText(/\/start (.+)/, cmdMenu);
 
     bot.onText(/\/menu (.+)/, cmdMenu);
