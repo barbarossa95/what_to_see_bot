@@ -67,6 +67,7 @@ function Bot () {
                     text: 'Soon in cinema',
                     callback_data: {
                         action: 'getSoon'
+                    }
                   }
                 ],
                 [
@@ -74,6 +75,7 @@ function Bot () {
                     text: 'Films by genres',
                     callback_data: {
                         action: 'getGenres'
+                    }
                   }
                 ],
                 [
@@ -81,6 +83,7 @@ function Bot () {
                     text: 'Popular films',
                     callback_data: {
                         action: 'getPopular'
+                    }
                   }
                 ]
               ]
