@@ -39,7 +39,7 @@ function Bot () {
 
 
 
-        let options = {
+        let opt = {
             reply_markup: {
                 reply_keyboard_markup: {
                     keyboard: [
@@ -51,7 +51,7 @@ function Bot () {
                 }
             }
         };
-        bot.sendMessage(267461350, 'Bot Menu:', options);
+        bot.sendMessage(267461350, 'Bot Menu:', opt);
 
 
 
