@@ -37,6 +37,10 @@ function Bot () {
 
     bot.setWebHook(`${url}/bot${telegramBotToken}`);
 
+    bot.onText(/\/start (.+)/, cmdMenu);
+
+    bot.onText(/\/menu (.+)/, cmdMenu);
+
     bot.onText(/\/echo (.+)/, cmdEcho);
 
     bot.onText(/\/searchByName (.+)/, cmdSearchByName);
@@ -63,11 +67,39 @@ function Bot () {
         return "ишо?";
     }
 
+    function cmdMenu(msg, match) {
+        let options = {
+            reply_markup: {
+                reply_keyboard_markup: {
+                    keyboard: [
+                        [ { text: 'Button 1 text' }, ],
+                        [ { text: 'Button 2 text' }, ],
+                        [ { text: 'Button 3 text' }, ],
+                        [ { text: 'Button 4 text' }, ]
+                    ],
+                }
+            }
+        };
+        bot.sendMessage(msg.chat.id, 'Bot Menu:', options);
+    }
+
+    /**
+     * Echo command
+     * @param  {string} msg entire message
+     * @param  {array} match regexp array
+     * @return {void}
+     */
     function cmdEcho(msg, match) {
         const resp = match[1];
         bot.sendMessage(msg.chat.id, resp);
     }
 
+    /**
+     * Search films by name
+     * @param  {string} msg entire message
+     * @param  {array} match regexp array
+     * @return {void}
+     */
     function cmdSearchByName(msg, match) {
         const query = match[1];
 
@@ -78,12 +110,17 @@ function Bot () {
                 sendMovies(res.results, msg.chat.id);
             });
     }
-
+    /**
+     * Send movies array in chat with user
+     * @param  {array} movies
+     * @param  {integer} target chat id
+     * @return {void}
+     */
     function sendMovies(movies, chatId) {
         for (var movie of movies) {
             message = `<b>${movie.title}</b>\n`;
-            message += movie.owerview;
-            bot.sendMessage(chatId, message);
+            message += movie.overview;
+            bot.sendMessage(chatId, message, { parse_mode: 'HTML' });
         }
     }
 
