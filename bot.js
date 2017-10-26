@@ -40,9 +40,9 @@ function Bot () {
 
     cmdMenu({ chat: { id: 267461350}});
 
-    bot.onText(/\/start (.+)/, cmdMenu);
+    bot.onText(/\/start/, cmdMenu);
 
-    bot.onText(/\/menu (.+)/, cmdMenu);
+    bot.onText(/\/menu/, cmdMenu);
 
     bot.onText(/\/echo (.+)/, cmdEcho);
 
