@@ -8,6 +8,8 @@
 
 function Bot () {
 
+    this.zoomers = {};
+
     this.getSoon = function(){
         console.log('getSoon');
     };
@@ -59,6 +61,8 @@ function Bot () {
     bot.onText(/\/start/, cmdMenu);
 
     bot.onText(/\/menu/, cmdMenu);
+
+    bot.onText(/\/zoomer (.+)/, cmdZoomer);
 
     bot.onText(/\/searchByName (.+)/, cmdSearchByName);
 
@@ -131,6 +135,36 @@ function Bot () {
                 sendMovies(res.results, msg.chat.id);
             });
     }
+
+    function cmdZoomer(msg, match) {
+        const interval = match[1];
+
+        if (!this.zoomers[msg.chat.id]) this.zoomers[msg.chat.id] = {};
+
+        // Has no param - show info about current zoomer
+        if (interval === 'undefined') {
+            if (!this.zoomers[msg.chat.id].id) message = 'Currently no running zoomers';
+            else message = 'Currently running zoomer 1';
+            bot.sendMessage(msg.chat.id, message);
+            return;
+        }
+
+        // Interval equals zero - delete zoomer
+        if (interval === 0) {
+            clearTimeout(this.zoomers[msg.chat.id].id);
+            this.zoomers[msg.chat.id].id = 0;
+            return;
+        }
+
+        // Interval gt zero - create zoomer
+        if (interval > 0) {
+            setInterval(() => bot.sendMessage(msg.chat.id, 'BZZZZ BZZZZ BZZZZ'), interval * 1000)
+            bot.sendMessage(msg.chat.id, 'Zoomer started');
+            return;
+        }
+
+    }
+
     /**
      * Send movies array in chat with user
      * @param  {array} movies
